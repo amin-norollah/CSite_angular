@@ -1,2 +1,38 @@
-<button mat-button>dddd</button>
-<router-outlet></router-outlet>
+<!-- side nave -->
+<ng-container>
+  <!-- top toolbar -->
+  <mat-toolbar class="header" *ngIf="isLoggedIn">
+    <button mat-button (click)="sidenav.toggle()">
+      <fa-icon [icon]="faBars" class="fa-xl"> </fa-icon> &nbsp; Menu
+    </button>
+    <span class="spacer"></span>
+
+    <img src="assets/imgs/CSite-logo.svg" />
+  </mat-toolbar>
+
+  <mat-sidenav-container class="container">
+    <mat-sidenav
+      #sidenav
+      mode="side"
+      [opened]="isLoggedIn"
+      class="sidenav"
+      [fixedInViewport]="options.value.fixed"
+      [fixedTopGap]="options.value.top"
+      [fixedBottomGap]="options.value.bottom"
+    >
+      {{ options.value.fixed ? "Fixed" : "Non-fixed" }} Sidenav
+    </mat-sidenav>
+
+    <mat-sidenav-content [formGroup]="options">
+      <!-- main content  -->
+      <router-outlet
+        (activate)="onActivate($event)"
+        (deactivate)="onDeactivate()"
+      ></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+
+  <p class="footer" *ngIf="isLoggedIn">
+    ©2022 designed by Amin NOROLLAH - Balrug.
+  </p>
+</ng-container>

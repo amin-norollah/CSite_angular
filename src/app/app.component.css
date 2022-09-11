@@ -1,0 +1,50 @@
+.container {
+  position: absolute !important;
+  top: 64px;
+  bottom: 1.2rem;
+  left: 0;
+  right: 0;
+  background: transparent;
+}
+
+.sidenav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 200px;
+  background: white;
+  box-shadow: 10px 0px 7px -8px rgb(112, 112, 112);
+}
+
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(226, 226, 226, 1) 0%,
+    rgba(219, 219, 219, 1) 50%,
+    rgba(209, 209, 209, 1) 51%,
+    rgba(254, 254, 254, 1) 100%
+  );
+  box-shadow: 0px 10px 7px -8px rgba(148, 148, 148, 1);
+}
+
+.header > img {
+  position: fixed;
+  height: 40px;
+  right: 20px;
+}
+
+.footer {
+  position: fixed;
+  text-align: center;
+  margin-bottom: 0 !important;
+  height: 1.2rem;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: white;
+  box-shadow: 0px -10px 7px -8px rgba(148, 148, 148, 1);
+}

@@ -1,4 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+:root {
+  --font-ratio: 2em;
+  --font-ratio-mobile: 1.9em;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+  --color-1: rgb(8, 250, 203);
+  --color-2: rgb(0, 218, 174);
+  --color-3: rgb(0, 194, 155);
+  --color-4: rgb(0, 151, 121);
+  --color-5: rgb(0, 83, 67);
+  --color-6: rgb(0, 37, 30);
+  --color-warning: rgb(216, 158, 0);
+  --color-error: rgb(143, 0, 0);
+}
+
+html,
+body {
+  height: 100%;
+}
+html {
+  color: var(--color-6);
+  overflow: hidden;
+  user-select: none;
+}
+
+body {
+  margin: 0;
+
+  background-color: rgb(0, 225, 255);
+  background-image: url(/assets/imgs/back-gradient.svg);
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+.main-content {
+  margin: 1rem;
+  padding: 1rem;
+  border-radius: 5px;
+  background: white;
+  box-shadow: 0px 0px 9px 0px rgb(112 112 112);
+}

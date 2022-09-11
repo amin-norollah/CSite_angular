@@ -3,7 +3,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialsModule } from './materials/materials.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
@@ -19,6 +19,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { UsersComponent } from './pages/users/users.component';
+import { ControlDialogComponent } from './shared/dialog/controlDialog.component';
 
 //*********************************************************************/
 // for test please move the dist files to iis server, otherwise you will
@@ -31,6 +32,7 @@ import { UsersComponent } from './pages/users/users.component';
     ProductsComponent,
     OrdersComponent,
     UsersComponent,
+    ControlDialogComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -39,6 +41,7 @@ import { UsersComponent } from './pages/users/users.component';
     HttpClientModule,
     MaterialsModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     FlexLayoutModule,
     FontAwesomeModule,

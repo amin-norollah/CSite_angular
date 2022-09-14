@@ -1,11 +1,9 @@
 export const environment = {
   production: false,
 
-  apiRoot: 'https://localhost:5010/api',
+  apiRoot: 'https://localhost:8088/api',
   clientRoot: 'http://localhost:4200',
-  idpAuthority: 'https://localhost:44310',
-  idpUserAPI: 'https://localhost:44355',
-  clientId: 'smart_cattle_user_panel_api_swaggerui',
-  clientScope:
-    'openid roles profile offline_access smart_cattle_user_panel_api',
+  idpAuthority: 'https://localhost:8800',
+  clientId: 'CSite_client',
+  clientScope: 'openid roles profile offline_access CSite_API',
 };

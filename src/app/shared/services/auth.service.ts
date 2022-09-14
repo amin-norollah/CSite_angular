@@ -1,143 +1,127 @@
+// The only way that we can use password grand type in our
+// authentication is to manage connection by our self.
+// for this reason I could not use popular libraries like
+// oidc-client-ts, unfortunately.
+// However, one can easily change this service with oidc-client-ts based
+// service to use all its feature.
+
 import { Injectable } from '@angular/core';
-import { User, UserManager } from 'oidc-client-ts';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import jwt_decode from 'jwt-decode';
+import { GenericService } from '../generic.service';
+import { ControlDialogComponent } from '../dialog/controlDialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  userManager: UserManager;
-  private _user: User | any;
-  private _loginChangedSubject = new Subject<boolean>();
-  public loginChanged = this._loginChangedSubject.asObservable();
-  public get isLoggedin(): boolean {
-    return this.checkUser(this._user);
-  }
-  //tokens
-  private _tokenChangedSubject = new Subject<boolean>();
-  public tokenChanged = this._tokenChangedSubject.asObservable();
+  //Observable navItem source
+  private _authNavStatusSource = new BehaviorSubject<boolean>(false);
+  // Observable navItem stream
+  authNavStatus$ = this._authNavStatusSource.asObservable();
 
-  constructor() {
-    const settings = {
-      authority: environment.idpAuthority,
-      client_id: environment.clientId,
-      redirect_uri: `${environment.clientRoot}/signin-callback`,
-      silent_redirect_uri: `${environment.clientRoot}/silent-callback`,
-      post_logout_redirect_uri: `${environment.clientRoot}/signout-callback`,
-      response_type: 'code', //password in our real project
-      scope: environment.clientScope,
-    };
-    this.userManager = new UserManager(settings);
-  }
+  private _user: any | null;
+  isAuth: boolean = false;
 
-  /////////////////////////////////////////////
-  /////////////////////////////////////////////
-  // getting user data if exist
-  public getUser(): Promise<User | null> {
-    return this.userManager.getUser();
-  }
-
-  /////////////////////////////////////////////
-  /////////////////////////////////////////////
-  // getting the main role of user
-  public getRole() {
-    return this.getDecodedToken(this._user.access_token)?.role;
-  }
-
-  /////////////////////////////////////////////
-  /////////////////////////////////////////////
-  // getting specific claim from token
-  public getClaim(claimPropertyName: string): string {
-    const decoded_token = this.getDecodedToken(this._user.access_token);
-    if (!decoded_token) return '';
-
-    if (decoded_token.hasOwnProperty(claimPropertyName))
-      return decoded_token[claimPropertyName];
-    else return '';
-  }
+  constructor(
+    private genericService: GenericService<any>,
+    private dialog: MatDialog,
+    private router: Router
+  ) {}
 
   /////////////////////////////////////////////
   /////////////////////////////////////////////
   // log in and log out processes
-  public login(): Promise<void> {
-    return this.userManager.signinRedirect();
+  LoginByPassword(username: string, password: string): Promise<boolean> {
+    // create promise in order to follow it
+    return new Promise((resolve, reject) => {
+      const headers = new Headers();
+      headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+      let body = new URLSearchParams();
+      body.set('grant_type', 'password');
+      body.set('username', username);
+      body.set('password', password);
+      body.set('scopes', environment.clientScope);
+      body.set('grant_type', 'password');
+      body.set('client_id', environment.clientId);
+
+      this.genericService
+        .LoginCall(environment.idpAuthority + '/connect/token', body)
+        .subscribe({
+          next: (data: any) => {
+            var token = data.access_token;
+            var decoded: any = jwt_decode(token);
+
+            this._user = decoded;
+            this.isAuth = true;
+            localStorage.setItem('auth', 'true');
+            localStorage.setItem('accessToken', data.access_token);
+            localStorage.setItem('userId', decoded.sub);
+            localStorage.setItem('username', username);
+            localStorage.setItem('firstName', decoded.name);
+            localStorage.setItem('familyName', decoded.family_name);
+            localStorage.setItem('role', decoded.role);
+
+            resolve(true);
+          },
+          error: (error: any) => {
+            console.log(error);
+            this.dialog.open(ControlDialogComponent, {
+              data: {
+                title: `${error.statusCode}`,
+                message: error.message,
+              },
+            });
+
+            localStorage.setItem('auth', 'false');
+
+            reject(false);
+          },
+        });
+    });
   }
 
-  public logout(): Promise<void> {
-    return this.userManager.signoutRedirect();
+  async Logout() {
+    this.router.navigate(['/login']);
+    localStorage.clear();
   }
 
   /////////////////////////////////////////////
   /////////////////////////////////////////////
   // check if user was authenticated
-  public isAuthenticated = (): Promise<boolean> => {
-    return this.getUser().then((user: any) => {
-      if (this._user !== user) {
-        this._loginChangedSubject.next(this.checkUser(user));
-      }
-
-      this._user = user;
-
-      return this.checkUser(user);
-    });
-  };
-
-  /////////////////////////////////////////////
-  /////////////////////////////////////////////
-  // using refresh token to renew access and id tokens
-  public renewToken(): Promise<User | null> {
-    return this.userManager.signinSilent().then((user) => {
-      this._user = user;
-      this._tokenChangedSubject.next(true);
-      return user;
-    });
+  isAuthenticated(): boolean {
+    return localStorage.getItem('auth') === 'true';
   }
 
-  /////////////////////////////////////////////
-  /////////////////////////////////////////////
-  // check if user data is valid
-  private checkUser = (user: User): boolean => {
-    return !!user && !user.expired;
-  };
-
-  /////////////////////////////////////////////
-  /////////////////////////////////////////////
-  // decoding the token and extract its data
-  public getDecodedToken(token: string): any {
-    try {
-      return jwt_decode(token);
-    } catch (Error) {
-      return null;
-    }
+  get token(): string {
+    return localStorage.getItem('accessToken') || '';
   }
 
-  /////////////////////////////////////////////
-  /////////////////////////////////////////////
-  // check if the token is valid and not expired
-  public getTokenValidity(token_expiry: Number): boolean {
-    return Math.floor(new Date().getTime() / 1000) < token_expiry;
+  get username(): string {
+    return localStorage.getItem('username') || '';
   }
 
-  /////////////////////////////////////////////
-  /////////////////////////////////////////////
-  public getAccessToken(): string {
-    if (!this._user) return '';
-    return 'Bearer ' + this._user?.access_token;
+  get name(): string {
+    return localStorage.getItem('firstName') || '';
   }
 
-  public getIdToken(): string {
-    if (!this._user) return '';
-    return 'Bearer ' + this._user?.id_token;
+  get family_name(): string {
+    return localStorage.getItem('familyName') || '';
   }
 
-  public getRefreshToken(): string {
-    return this._user?.refresh_token;
+  get role(): string {
+    return localStorage.getItem('role') || '';
   }
 
-  public getUserId(): string {
-    if (!this._user) return '';
-    return this.getDecodedToken(this._user.access_token)?.sub;
+  get userId(): string {
+    return localStorage.getItem('userId') || '';
+  }
+
+  get user(): any {
+    return this._user;
   }
 }

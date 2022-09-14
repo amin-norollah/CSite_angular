@@ -1,1 +1,27 @@
-<p>products works!</p>
+<!-- breadcrumb -->
+<mat-card>
+  <p>Home > Products</p>
+</mat-card>
+
+<mat-card>
+  <!------------------------->
+  <!-- Cars -->
+  <form class="form">
+    <!-- name -->
+    <app-input title="Name" [(content)]="carName"></app-input>
+    <!-- name -->
+    <app-input title="Price" [(content)]="carPrice"></app-input>
+    <!-- description  -->
+    <app-text-area
+      title="Description"
+      [(content)]="carDescription"
+    ></app-text-area>
+  </form>
+
+  <!------------------------->
+  <!-- like and comment buttons -->
+  <mat-card-actions align="end">
+    <button mat-button>Clear</button>
+    <button mat-raised-button color="primary" (click)="AddCar()">Add</button>
+  </mat-card-actions>
+</mat-card>

@@ -39,3 +39,17 @@ body {
   background: white;
   box-shadow: 0px 0px 9px 0px rgb(112 112 112);
 }
+
+/*****************************************************/
+/* fawesome icon */
+fa-icon {
+  margin-right: 0.3rem;
+}
+
+/*****************************************************/
+/* change default theme */
+.mat-card {
+  max-width: auto;
+  color: var(--color-font-body);
+  margin: 0.8rem 5rem;
+}

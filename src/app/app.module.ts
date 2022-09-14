@@ -20,6 +20,9 @@ import { ProductsComponent } from './pages/products/products.component';
 import { OrdersComponent } from './pages/orders/orders.component';
 import { UsersComponent } from './pages/users/users.component';
 import { ControlDialogComponent } from './shared/dialog/controlDialog.component';
+import { InputComponent } from './shared/components/input/input.component';
+import { TextAreaComponent } from './shared/components/text-area/text-area.component';
+import { AuthService } from './shared/services/auth.service';
 
 //*********************************************************************/
 // for test please move the dist files to iis server, otherwise you will
@@ -33,6 +36,8 @@ import { ControlDialogComponent } from './shared/dialog/controlDialog.component'
     OrdersComponent,
     UsersComponent,
     ControlDialogComponent,
+    InputComponent,
+    TextAreaComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   imports: [
@@ -48,6 +53,9 @@ import { ControlDialogComponent } from './shared/dialog/controlDialog.component'
   ],
   entryComponents: [MatDialogModule],
   bootstrap: [AppComponent],
-  providers: [{ provide: LocationStrategy, useClass: HashLocationStrategy }],
+  providers: [
+    AuthService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy },
+  ],
 })
 export class AppModule {}

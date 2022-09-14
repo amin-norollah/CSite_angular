@@ -5,5 +5,5 @@ export interface ICars {
   description: string;
   createdDate: Date;
   modifiedDate: Date;
-  userId: number;
+  userId: string;
 }

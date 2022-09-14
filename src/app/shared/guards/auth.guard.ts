@@ -64,8 +64,8 @@ export class AuthGuard
 
   checkUserLogin(route: ActivatedRouteSnapshot, url: any): boolean {
     let isUserAllowed = true;
-    if (this._authService.isLoggedin) {
-      const userRole = this._authService.getRole();
+    if (this._authService.isAuthenticated()) {
+      const userRole = this._authService.role;
       if (Array.isArray(userRole)) {
         let isUserRolesInclude = false;
         for (let i = 0; i < userRole.length; i++) {

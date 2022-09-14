@@ -10,6 +10,7 @@
     <img src="assets/imgs/CSite-logo.svg" />
   </mat-toolbar>
 
+  <!-- side nav -->
   <mat-sidenav-container class="container">
     <mat-sidenav
       #sidenav
@@ -20,7 +21,22 @@
       [fixedTopGap]="options.value.top"
       [fixedBottomGap]="options.value.bottom"
     >
-      {{ options.value.fixed ? "Fixed" : "Non-fixed" }} Sidenav
+      <button mat-button [routerLink]="'/dashboard'">
+        <fa-icon [icon]="faHome" class="fa-xl"> </fa-icon>
+        Dashboard
+      </button>
+      <button mat-button [routerLink]="'/products'">
+        <fa-icon [icon]="faCar" class="fa-xl"> </fa-icon>
+        Products
+      </button>
+      <button mat-button [routerLink]="'/orders'">
+        <fa-icon [icon]="faCartShopping" class="fa-xl"> </fa-icon>
+        Orders
+      </button>
+      <button mat-button [routerLink]="'/users'">
+        <fa-icon [icon]="faUser" class="fa-xl"> </fa-icon>
+        User management
+      </button>
     </mat-sidenav>
 
     <mat-sidenav-content [formGroup]="options">

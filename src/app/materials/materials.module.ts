@@ -1,8 +1,7 @@
 import { NgModule } from '@angular/core';
 
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
-import { MatCardModule } from '@angular/material/card';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -12,11 +11,13 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatInputModule } from '@angular/material/input';
 
 const mat = [
   MatButtonModule,
-  MatInputModule,
-  MatCardModule,
+  MatButtonToggleModule,
   MatIconModule,
   MatMenuModule,
   MatSidenavModule,
@@ -26,6 +27,9 @@ const mat = [
   MatExpansionModule,
   MatTooltipModule,
   MatDialogModule,
+  MatCardModule,
+  MatChipsModule,
+  MatInputModule,
 ];
 
 @NgModule({

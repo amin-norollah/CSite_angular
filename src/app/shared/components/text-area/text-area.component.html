@@ -1,0 +1,11 @@
+<mat-form-field class="full-width" appearance="fill">
+  <mat-label>{{ title }}</mat-label>
+  <textarea
+    matInput
+    #message
+    maxlength="500"
+    [(ngModel)]="content"
+    (ngModelChange)="EmitOutput()"
+  ></textarea>
+  <mat-hint align="end">{{ message.value.length }} / 500</mat-hint>
+</mat-form-field>

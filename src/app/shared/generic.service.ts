@@ -10,11 +10,11 @@ import { MatDialog } from '@angular/material/dialog';
 export class GenericService<T> {
   constructor(private http: HttpClient, public dialog: MatDialog) {}
 
-  private generateHeaders = (token: string) => {
+  private generateHeaders = () => {
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: token,
+        Authorization: localStorage.getItem('accessToken') || '',
       }),
     };
   };
@@ -35,40 +35,38 @@ export class GenericService<T> {
 
   //-------------GENERIC API--------------//
   // FETCH
-  getGeneric(token: string, url: string, queryString: string): Observable<T> {
-    return this.http
-      .get<T>(url + queryString, this.generateHeaders(token))
-      .pipe(
-        retry(1),
-        catchError((error) => throwError(() => error))
-      );
+  getGeneric(url: string, queryString: string): Observable<T> {
+    return this.http.get<T>(url + queryString, this.generateHeaders()).pipe(
+      retry(1),
+      catchError((error) => throwError(() => error))
+    );
   }
 
   // CREATE
-  createGeneric(token: string, url: string, item: T): Observable<T> {
-    return this.http.post<T>(url, item, this.generateHeaders(token)).pipe(
+  createGeneric(url: string, item: T): Observable<T> {
+    return this.http.post<T>(url, item, this.generateHeaders()).pipe(
       retry(1),
       catchError((error) => throwError(() => error))
     );
   }
 
   //PUT
-  updateGeneric(token: string, url: string, item: T): Observable<T> {
+  updateGeneric(url: string, item: T): Observable<T> {
     if (item == null)
-      return this.http.put<T>(url, this.generateHeaders(token)).pipe(
+      return this.http.put<T>(url, this.generateHeaders()).pipe(
         retry(1),
         catchError((error) => throwError(() => error))
       );
 
-    return this.http.put<T>(url, item, this.generateHeaders(token)).pipe(
+    return this.http.put<T>(url, item, this.generateHeaders()).pipe(
       retry(1),
       catchError((error) => throwError(() => error))
     );
   }
 
   //DELETE
-  removeGeneric(token: string, url: string): Observable<T> {
-    return this.http.delete<T>(url, this.generateHeaders(token)).pipe(
+  removeGeneric(url: string): Observable<T> {
+    return this.http.delete<T>(url, this.generateHeaders()).pipe(
       retry(1),
       catchError((error) => throwError(() => error))
     );

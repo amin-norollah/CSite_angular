@@ -65,6 +65,7 @@ export class AuthService {
             localStorage.setItem('firstName', decoded.name);
             localStorage.setItem('familyName', decoded.family_name);
             localStorage.setItem('role', decoded.role);
+            localStorage.setItem('exp', decoded.exp);
 
             resolve(true);
           },
@@ -94,7 +95,9 @@ export class AuthService {
   /////////////////////////////////////////////
   // check if user was authenticated
   isAuthenticated(): boolean {
-    return localStorage.getItem('auth') === 'true';
+    if (localStorage.getItem('auth') === 'true') {
+      return this.getTokenValidity(+localStorage.getItem('exp')!);
+    } else return false;
   }
 
   get token(): string {
@@ -123,5 +126,21 @@ export class AuthService {
 
   get user(): any {
     return this._user;
+  }
+
+  /////////////////////////////////////////////
+  // decoding the token and extract its data
+  public getDecodedToken(token: string): any {
+    try {
+      return jwt_decode(token);
+    } catch (Error) {
+      return null;
+    }
+  }
+
+  /////////////////////////////////////////////
+  // check if the token is valid and not expired
+  public getTokenValidity(token_expiry: Number): boolean {
+    return Math.floor(new Date().getTime() / 1000) < token_expiry;
   }
 }

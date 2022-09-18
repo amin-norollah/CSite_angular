@@ -14,7 +14,7 @@ export class GenericService<T> {
     return {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        Authorization: localStorage.getItem('accessToken') || '',
+        Authorization: 'Bearer ' + localStorage.getItem('accessToken'),
       }),
     };
   };

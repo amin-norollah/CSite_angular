@@ -10,6 +10,7 @@ import {
   faCar,
   faUser,
   faCartShopping,
+  faSignOut,
 } from '@fortawesome/free-solid-svg-icons';
 import { Router } from '@angular/router';
 
@@ -26,6 +27,7 @@ export class AppComponent implements OnInit {
   faCar = faCar;
   faUser = faUser;
   faCartShopping = faCartShopping;
+  faSignOut = faSignOut;
 
   doStuffSubscription: Observable<boolean> | any;
 
@@ -46,10 +48,21 @@ export class AppComponent implements OnInit {
     });
 
     //check authorization
-    this.isLoggedIn = authService.isAuthenticated();
+    this.CheckAuthentication(this.authService.isAuthenticated());
+
+    //check authorization periodically
+    setInterval(() => {
+      this.CheckAuthentication(this.authService.isAuthenticated());
+    }, 30 * 1000);
   }
   ngOnInit(): void {
     this.currentRoute = window.location.pathname;
+  }
+
+  // check authentication
+  CheckAuthentication(auth: boolean) {
+    this.isLoggedIn = auth;
+    if (!auth) this.authService.Logout();
   }
 
   //******************************************************/

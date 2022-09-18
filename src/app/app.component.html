@@ -5,13 +5,17 @@
     <button mat-button (click)="sidenav.toggle()">
       <fa-icon [icon]="faBars" class="fa-xl"> </fa-icon> &nbsp; Menu
     </button>
+    <button mat-button (click)="CheckAuthentication(false)">
+      <fa-icon [icon]="faSignOut" class="fa-xl"> </fa-icon>
+      Log out
+    </button>
     <span class="spacer"></span>
 
     <img src="assets/imgs/CSite-logo.svg" />
   </mat-toolbar>
 
   <!-- side nav -->
-  <mat-sidenav-container class="container">
+  <mat-sidenav-container class="mat-app-background container">
     <mat-sidenav
       #sidenav
       mode="side"

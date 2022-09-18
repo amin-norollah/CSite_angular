@@ -5,5 +5,5 @@ export interface IProduct {
   quantity: number;
   exported: number;
   imported: number;
-  car: ICars;
+  cars: ICars;
 }

@@ -5,23 +5,157 @@
 
 <mat-card>
   <!------------------------->
-  <!-- Cars -->
-  <form class="form">
-    <!-- name -->
-    <app-input title="Name" [(content)]="carName"></app-input>
-    <!-- name -->
-    <app-input title="Price" [(content)]="carPrice"></app-input>
+  <!-- car -->
+  <form class="product-form">
+    <h2>Add new car:</h2>
+    <div>
+      <!-- name -->
+      <app-input title="Name" [(content)]="carName"></app-input>
+      <!-- name -->
+      <app-input title="Price" [(content)]="carPrice"></app-input>
+    </div>
     <!-- description  -->
     <app-text-area
       title="Description"
       [(content)]="carDescription"
     ></app-text-area>
   </form>
-
   <!------------------------->
-  <!-- like and comment buttons -->
+  <!-- clear and add buttons -->
   <mat-card-actions align="end">
-    <button mat-button>Clear</button>
+    <button mat-button (click)="ClearFields()">Clear</button>
     <button mat-raised-button color="primary" (click)="AddCar()">Add</button>
   </mat-card-actions>
+
+  <!-- car table -->
+  <mat-card-content>
+    <h2>List of cars:</h2>
+    <table mat-table [dataSource]="carTableDataSource" class="mat-elevation-z8">
+      <!-- Column 1 -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Car id</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- Column 2 -->
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+      <!-- Column 3 -->
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+      </ng-container>
+
+      <!-- Column 4 -->
+      <ng-container matColumnDef="username">
+        <th mat-header-cell *matHeaderCellDef>Owner</th>
+        <td mat-cell *matCellDef="let element">{{ element.userName }}</td>
+      </ng-container>
+
+      <!-- Column 5 -->
+      <ng-container matColumnDef="createdDate">
+        <th mat-header-cell *matHeaderCellDef>Created date</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.createdDate.toLocaleString() }}
+        </td>
+      </ng-container>
+
+      <!-- Column 6 -->
+      <ng-container matColumnDef="modifiedDate">
+        <th mat-header-cell *matHeaderCellDef>Modified date</th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.modifiedDate.toLocaleString() }}
+        </td>
+      </ng-container>
+
+      <!-- Column 7 -->
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="carTableDisplayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: carTableDisplayedColumns"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <!------------------------->
+  <!-- product -->
+  <form class="product-form">
+    <h2>Add new product:</h2>
+    <div>
+      <!-- name -->
+      <app-input title="Car ID" [(content)]="productCarId"></app-input>
+      <!-- name -->
+      <app-input
+        title="Initial quantity"
+        [(content)]="productQuantity"
+      ></app-input>
+    </div>
+  </form>
+  <!------------------------->
+  <!-- clear and add buttons -->
+  <mat-card-actions align="end">
+    <button mat-button (click)="ClearFields()">Clear</button>
+    <button mat-raised-button color="primary" (click)="AddProduct()">
+      Add
+    </button>
+  </mat-card-actions>
+
+  <!-- product table -->
+  <mat-card-content>
+    <h2>List of products:</h2>
+    <table
+      mat-table
+      [dataSource]="productsTableDataSource"
+      class="mat-elevation-z8"
+    >
+      <!-- Column 1 -->
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>Product id</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <!-- Column 2 -->
+      <ng-container matColumnDef="carId">
+        <th mat-header-cell *matHeaderCellDef>Car id</th>
+        <td mat-cell *matCellDef="let element">{{ element.cars.id }}</td>
+      </ng-container>
+
+      <!-- Column 3 -->
+      <ng-container matColumnDef="carName">
+        <th mat-header-cell *matHeaderCellDef>Car name</th>
+        <td mat-cell *matCellDef="let element">{{ element.cars.name }}</td>
+      </ng-container>
+
+      <!-- Column 4 -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <td mat-cell *matCellDef="let element">{{ element.quantity }}</td>
+      </ng-container>
+
+      <!-- Column 5 -->
+      <ng-container matColumnDef="imported">
+        <th mat-header-cell *matHeaderCellDef>Num of imported</th>
+        <td mat-cell *matCellDef="let element">{{ element.imported }}</td>
+      </ng-container>
+
+      <!-- Column 6 -->
+      <ng-container matColumnDef="exported">
+        <th mat-header-cell *matHeaderCellDef>Num of exported</th>
+        <td mat-cell *matCellDef="let element">{{ element.exported }}</td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="productsTableDisplayedColumns"></tr>
+      <tr
+        mat-row
+        *matRowDef="let row; columns: productsTableDisplayedColumns"
+      ></tr>
+    </table>
+  </mat-card-content>
 </mat-card>

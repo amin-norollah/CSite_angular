@@ -1,0 +1,22 @@
+.product-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-form > div {
+  display: flex;
+}
+
+table {
+  width: 100%;
+}
+
+/* columns */
+.mat-column-id,
+.mat-column-carId {
+  width: 4.5rem;
+}
+
+.mat-column-description {
+  width: 35%;
+}

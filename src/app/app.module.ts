@@ -23,6 +23,7 @@ import { ControlDialogComponent } from './shared/dialog/controlDialog.component'
 import { InputComponent } from './shared/components/input/input.component';
 import { TextAreaComponent } from './shared/components/text-area/text-area.component';
 import { AuthService } from './shared/services/auth.service';
+import { GenericDialogComponent } from './shared/dialog/GenericDialog.component';
 
 //*********************************************************************/
 // for test please move the dist files to iis server, otherwise you will
@@ -36,6 +37,7 @@ import { AuthService } from './shared/services/auth.service';
     OrdersComponent,
     UsersComponent,
     ControlDialogComponent,
+    GenericDialogComponent,
     InputComponent,
     TextAreaComponent,
   ],

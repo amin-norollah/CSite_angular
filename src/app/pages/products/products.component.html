@@ -3,34 +3,32 @@
   <p>Home > Products</p>
 </mat-card>
 
+<!-- *************************************************************** -->
+<!-- cars -->
 <mat-card>
-  <!------------------------->
-  <!-- car -->
-  <form class="product-form">
-    <h2>Add new car:</h2>
-    <div>
-      <!-- name -->
-      <app-input title="Name" [(content)]="carName"></app-input>
-      <!-- name -->
-      <app-input title="Price" [(content)]="carPrice"></app-input>
-    </div>
-    <!-- description  -->
-    <app-text-area
-      title="Description"
-      [(content)]="carDescription"
-    ></app-text-area>
-  </form>
-  <!------------------------->
-  <!-- clear and add buttons -->
-  <mat-card-actions align="end">
-    <button mat-button (click)="ClearFields()">Clear</button>
-    <button mat-raised-button color="primary" (click)="AddCar()">Add</button>
-  </mat-card-actions>
-
   <!-- car table -->
+  <h2>List of cars:</h2>
+  <mat-card-actions align="end">
+    <button mat-raised-button color="primary" (click)="AddCar()">
+      Add new car
+    </button>
+  </mat-card-actions>
   <mat-card-content>
-    <h2>List of cars:</h2>
     <table mat-table [dataSource]="carTableDataSource" class="mat-elevation-z8">
+      <!-- Column 0 -->
+      <ng-container matColumnDef="control">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <a
+            (click)="RemoveCarItem(element.id)"
+            matTooltip="remove item"
+            matTooltipShowDelay="500"
+          >
+            <fa-icon [icon]="faTrash"> </fa-icon
+          ></a>
+        </td>
+      </ng-container>
+
       <!-- Column 1 -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>Car id</th>
@@ -57,7 +55,7 @@
 
       <!-- Column 5 -->
       <ng-container matColumnDef="createdDate">
-        <th mat-header-cell *matHeaderCellDef>Created date</th>
+        <th mat-header-cell *matHeaderCellDef>Created at</th>
         <td mat-cell *matCellDef="let element">
           {{ element.createdDate.toLocaleString() }}
         </td>
@@ -65,7 +63,7 @@
 
       <!-- Column 6 -->
       <ng-container matColumnDef="modifiedDate">
-        <th mat-header-cell *matHeaderCellDef>Modified date</th>
+        <th mat-header-cell *matHeaderCellDef>Modified at</th>
         <td mat-cell *matCellDef="let element">
           {{ element.modifiedDate.toLocaleString() }}
         </td>
@@ -83,38 +81,36 @@
   </mat-card-content>
 </mat-card>
 
+<!-- *************************************************************** -->
+<!-- product -->
 <mat-card>
-  <!------------------------->
-  <!-- product -->
-  <form class="product-form">
-    <h2>Add new product:</h2>
-    <div>
-      <!-- name -->
-      <app-input title="Car ID" [(content)]="productCarId"></app-input>
-      <!-- name -->
-      <app-input
-        title="Initial quantity"
-        [(content)]="productQuantity"
-      ></app-input>
-    </div>
-  </form>
-  <!------------------------->
-  <!-- clear and add buttons -->
+  <h2>List of products:</h2>
   <mat-card-actions align="end">
-    <button mat-button (click)="ClearFields()">Clear</button>
     <button mat-raised-button color="primary" (click)="AddProduct()">
-      Add
+      Add new product
     </button>
   </mat-card-actions>
 
   <!-- product table -->
   <mat-card-content>
-    <h2>List of products:</h2>
     <table
       mat-table
       [dataSource]="productsTableDataSource"
       class="mat-elevation-z8"
     >
+      <!-- Column 0 -->
+      <ng-container matColumnDef="control">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <a
+            (click)="RemoveProductItem(element.id)"
+            matTooltip="remove item"
+            matTooltipShowDelay="500"
+          >
+            <fa-icon [icon]="faTrash"> </fa-icon
+          ></a>
+        </td>
+      </ng-container>
       <!-- Column 1 -->
       <ng-container matColumnDef="id">
         <th mat-header-cell *matHeaderCellDef>Product id</th>

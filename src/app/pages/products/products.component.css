@@ -1,10 +1,7 @@
-.product-form {
-  display: flex;
-  flex-direction: column;
-}
-
-.product-form > div {
-  display: flex;
+/* tables */
+.mat-card-content {
+  max-height: 400px;
+  overflow: auto;
 }
 
 table {
@@ -12,6 +9,10 @@ table {
 }
 
 /* columns */
+.mat-column-control {
+  width: 3rem;
+}
+
 .mat-column-id,
 .mat-column-carId {
   width: 4.5rem;
@@ -19,4 +20,16 @@ table {
 
 .mat-column-description {
   width: 35%;
+}
+
+fa-icon {
+  padding: 0.2rem 0.4rem;
+  color: #df0000;
+  border-radius: 0.4rem;
+  transition: all 0.3s;
+}
+
+fa-icon:hover {
+  color: #fff;
+  background-color: #df0000;
 }

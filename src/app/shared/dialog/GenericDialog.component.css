@@ -1,0 +1,11 @@
+.my-form {
+  display: flex;
+  flex-direction: column;
+  width: 60%;
+}
+
+.my-form > div {
+  display: grid;
+  grid-template-columns: 49% 49%;
+  gap: 2%;
+}

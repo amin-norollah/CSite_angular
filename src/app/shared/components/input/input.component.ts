@@ -11,6 +11,7 @@ export class InputComponent {
 
   //inout property
   @Input() title!: string;
+  @Input() type!: string;
 
   @Input() content!: number | string;
   @Output() contentChange = new EventEmitter<string>();

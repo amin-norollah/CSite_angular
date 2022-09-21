@@ -1,0 +1,26 @@
+<h2 style="margin-bottom: 5px" mat-dialog-title>
+  {{ data.title }}
+</h2>
+<form class="my-form">
+  <div>
+    <!-- inputs -->
+    <app-input
+      title="{{ item[0] }}"
+      [(content)]="this.inputs[data.inputs.indexOf(item)]"
+      type="{{ item[1] }}"
+      *ngFor="let item of data.inputs"
+    ></app-input>
+  </div>
+  <!-- description  -->
+  <app-text-area
+    title="{{ data.textarea }}"
+    [(content)]="textarea"
+    *ngIf="data.textarea !== ''"
+    style="width: 100%"
+  ></app-text-area>
+</form>
+
+<div mat-dialog-actions>
+  <button mat-button (click)="close()">Cancel</button>
+  <button mat-button (click)="returnAndClose()">Add</button>
+</div>

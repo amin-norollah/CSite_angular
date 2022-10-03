@@ -1,5 +1,3 @@
-import { User } from 'oidc-client-ts';
-
 export interface ICars {
   id: number;
   name: string;
